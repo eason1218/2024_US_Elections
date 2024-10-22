@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
+This repo explores predicting US presidential election outcomes using Bayesian methods, improving accuracy by aggregating poll data and incorporating prior information. The model shows Trump leading with 35.52% support, followed by Biden at 28.90%, despite Biden's withdrawal. The study emphasizes the importance of using up-to-date data and acknowledges limitations, such as potential biases and outdated information in polling data.
 
 
 ## File Structure
