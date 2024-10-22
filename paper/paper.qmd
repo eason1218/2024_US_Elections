@@ -41,7 +41,7 @@ We use the statistical programming language R [@citeR], with the goal of studyin
 #| message: false
 #| echo:    false
 
-poll <- read.csv("president_polls.csv")
+poll <- read.csv("raw_data.csv")
 poll_of_polls <- poll %>%
   group_by(pollster, answer) %>%
   summarize(count = n()) %>%
