@@ -19,7 +19,7 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-Some Graphing, simulating, cleaning, and editing writing in this paper is done by the help of ChatCPT 4o and the entire chat history is available in usage.txt located in the "llm" folder under "other" folder.
+Some Graphing, simulating, cleaning, and editing writing in this paper is done by the help of ChatGPT 4o and the entire chat history is available in usage.txt located in the "llm" folder under "other" folder.
 
 ## Some checks
 
