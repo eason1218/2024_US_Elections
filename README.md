@@ -1,4 +1,4 @@
-# Starter folder
+# Forecasting US Presidential Election Results Using Bayesian Prediction
 
 ## Overview
 
