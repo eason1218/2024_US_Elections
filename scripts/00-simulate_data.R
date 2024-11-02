@@ -10,43 +10,44 @@
 
 
 #### Workspace setup ####
-library(tidyverse)
+library(dplyr)
+library(rstan)
+library(ggplot2)
+library(knitr)
+library(readr)
 set.seed(853)
 
+library(tidyverse)
 
-#### Simulate data ####
-# State names
-states <- c(
-  "New South Wales",
-  "Victoria",
-  "Queensland",
-  "South Australia",
-  "Western Australia",
-  "Tasmania",
-  "Northern Territory",
-  "Australian Capital Territory"
-)
+# Function to generate percentages that sum to 1
+generate_percentages <- function(n) {
+  percentages <- runif(n)  # Generate random numbers
+  percentages <- percentages / sum(percentages)  # Normalize to sum to 1
+  return(percentages)
+}
 
-# Political parties
-parties <- c("Labor", "Liberal", "Greens", "National", "Other")
+# Initialize an empty tibble to store the results
+simulate_poll <- tibble()
 
-# Create a dataset by randomly assigning states and parties to divisions
-analysis_data <- tibble(
-  division = paste("Division", 1:151),  # Add "Division" to make it a character
-  state = sample(
-    states,
-    size = 151,
-    replace = TRUE,
-    prob = c(0.25, 0.25, 0.15, 0.1, 0.1, 0.1, 0.025, 0.025) # Rough state population distribution
-  ),
-  party = sample(
-    parties,
-    size = 151,
-    replace = TRUE,
-    prob = c(0.40, 0.40, 0.05, 0.1, 0.05) # Rough party distribution
+# Loop through pollsters
+for (i in 1:222) {
+  pollster_name <- paste("Pollster", i)
+  # Generate percentages for 4 candidates
+  percentages <- generate_percentages(4)
+  
+  # Create a tibble for this pollster
+  pollster_data <- tibble(
+    pollster = pollster_name,
+    candidate = paste("Candidate", 1:4),
+    percentage = percentages
   )
-)
+  
+  # Combine with the main data frame
+  simulate_poll <- bind_rows(simulate_poll, pollster_data)
+}
 
+# View the result
+print(simulate_poll)
 
 #### Save data ####
-write_csv(analysis_data, "data/00-simulated_data/simulated_data.csv")
+write_csv(simulate_poll, "simulate_data.csv")
