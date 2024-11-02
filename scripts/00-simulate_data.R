@@ -50,4 +50,4 @@ for (i in 1:222) {
 print(simulate_poll)
 
 #### Save data ####
-write_csv(simulate_poll, "simulate_data.csv")
+write_csv(simulate_poll, "simulated_data.csv")
