@@ -13,7 +13,7 @@ library(dplyr)
 library(readr)
 
 #### Clean data ####
-poll <- read.csv("president_polls.csv")
+poll <-  read_csv("data/01-raw_data/raw_data.csv")
 
 poll_of_polls <- poll %>%
   group_by(pollster, answer) %>%
