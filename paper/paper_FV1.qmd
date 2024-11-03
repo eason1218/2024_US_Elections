@@ -40,7 +40,7 @@ poll_of_polls <- read.csv("analysis_data.csv")
 ```
 # Data {#sec-data}
 
-This project is motivated and guided by Rohan Alexander and his book [@tellingstories]. Data used in this paper was downloaded, cleaned and analyzed with the programming language **R** [@citeR]. Also with support of additional packages in R: `ggplot2` [@citeGgplot2], `rstan`  [@citeRstan], `dplyr` [@citeDplyr], `here` [@citeHere], `knitr` [@citeKnitr].
+This project is motivated and guided by Rohan Alexander and his book [@tellingstories]. All the data used in this paper is derived from FiveThirtyEight’s U.S. [@FiveThirtyEight_Polls], and all the data analysis was done through the programming language **R** [@citeR]. Also with the support of additional packages in R: `ggplot2` [@citeGgplot2], `rstan`  [@citeRstan], `dplyr` [@citeDplyr], `here` [@citeHere], `knitr` [@citeKnitr].
 
 ## Source
 
