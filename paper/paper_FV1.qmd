@@ -4,7 +4,7 @@ author:
   - YiZhuo Li
   - Zhibin Huang
 thanks: "A GitHub Repository containing all data, R code, and other files used in this investigation is located here: <https://github.com/eason1218/2024_US_Elections.git>"
-date: today
+date: November 4, 2024
 date-format: long
 abstract: "This article aims to use Bayesian prediction methods to predict the results of the US presidential election in 2024. By summarizing public opinion poll data, we can understand the candidate's support rate. Results show Donald Trump has the highest winning probability. His America First strategy may influence the United States' relationship with foreign countries, as well as domestic measures on immigration and taxation."
 
@@ -44,9 +44,9 @@ This project is motivated and guided by Rohan Alexander and his book [@tellingst
 
 ## Source
 
-The dataset analyzed in this paper is to study poll of poll data to obtain more information about presidential elections [@FiveThirtyEight_Polls]. The Poll of Polls is a comprehensive dataset that combines public surveys from multiple pollsters, including key data such as methodology, states, and answers used by each pollster that was collected on October 20,2024. We did not do tail reduction, deletion, or other processing on the raw data to ensure data integrity. The dataset is a compilation of public opinion poll results from various institutes. It covers terms like pollster, state, pollster rating, and response. We utilized some parts of the data in this study.
+The dataset analyzed in this paper is to study poll of poll data to obtain more information about presidential elections [@FiveThirtyEight_Polls]. The Poll of Polls is a comprehensive dataset that combines public surveys from multiple pollsters, including key data such as methodology, states, and answers used by each pollster that was collected on October 20, 2024. We did not do tail reduction, deletion, or other processing on the raw data to ensure data integrity. The dataset is a compilation of public opinion poll results from various institutes. It covers terms like pollster, state, pollster rating, and response. We utilized some parts of the data in this study.
 
-## Varibale
+## Variable
 
 In this model, we mainly introduced two variables, percentage, and pollster.
 
