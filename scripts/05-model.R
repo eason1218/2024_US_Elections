@@ -40,4 +40,4 @@ model {
 
 #### Save model ####
 compiled_model <- stan_model(model_code = stan_model_code)
-saveRDS(compiled_model, file = "first_model.rds")
+saveRDS(compiled_model, file = "models/first_model.rds")
