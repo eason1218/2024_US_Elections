@@ -8,11 +8,7 @@
 
 
 #### Workspace setup ####
-library(dplyr)
-library(rstan)
-library(ggplot2)
-library(knitr)
-library(readr)
+library(tidyverse)
 set.seed(853)
 
 library(tidyverse)
