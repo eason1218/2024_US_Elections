@@ -9,7 +9,7 @@
 #### Workspace setup ####
 library(tidyverse)
 
-simulate_poll <- read.csv("simulate_data.csv")
+simulate_poll <- read.csv("data/00-simulated_data/simulated_data.csv")
 
 #### Test data ####
 
