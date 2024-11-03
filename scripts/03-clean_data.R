@@ -11,7 +11,7 @@ library(tidyverse)
 library(readr)
 
 #### Clean data ####
-poll <- read.csv("raw_data.csv")
+poll <- read.csv("data/01-raw_data/raw_data.csv")
 
 poll_of_polls <- poll %>%
   group_by(pollster, answer) %>%
@@ -22,4 +22,4 @@ poll_of_polls <- poll %>%
   select(pollster, answer, percentage, count)
 
 #### Save data ####
-write_csv(poll_of_polls, "analysis_data.csv")
+write_csv(poll_of_polls, "data/02-analysis_data/analysis_data.csv")
