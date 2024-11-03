@@ -10,7 +10,7 @@
 library(tidyverse)
 
 ## read the data
-poll_of_polls <- read_csv("analysis_data.csv")
+poll_of_polls <- read_csv("data/02-analysis_data/analysis_data.csv")
 
 #### Test data ####
 
