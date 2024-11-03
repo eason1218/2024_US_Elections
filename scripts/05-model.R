@@ -11,7 +11,7 @@ library(tidyverse)
 library(rstan)
 
 #### Read data ####
-poll_of_polls <- read.csv("analysis_data.csv")
+poll_of_polls <- read.csv("data/02-analysis_data/analysis_data.csv")
 
 ### Model data ####
 stan_model_code <- "
