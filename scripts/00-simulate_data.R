@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Simulates polling data with support percentages and vote counts for candidates across multiple pollsters.
 # Author: YiZhuo Li
-# Date: 2 November 2024
+# Date: 2 November, 2024
 # Contact: liyizhuo.li@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: The `tidyverse` package must be installed
