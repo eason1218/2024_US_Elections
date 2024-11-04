@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: build the model for analysis
 # Author: YiZhuo Li
-# Date: 2 November 2024
+# Date: 2 November, 2024
 # Contact: liyizhuo.li@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: The `tidyverse` and `rstan` package must be installed
