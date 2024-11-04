@@ -11,7 +11,7 @@ The repo is structured as:
 
 -   `data/raw_data` contains the raw data as obtained from FiveThirtyEight_Polls.
 -   `data/analysis_data` contains the cleaned dataset that was constructed.
--   `model` contains fitted models. 
+-   `models` contains fitted models. 
 -   `other` contains about literature, LLM chat interactions, and sketches.
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
 -   `scripts` contains the R scripts used to simulate, download, clean, test and model data.
