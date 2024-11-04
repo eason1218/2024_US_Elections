@@ -19,5 +19,5 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-Some coding and editing writing in this paper is done with the help of ChatGPT 4o and the entire chat history is available in usage.txt located in the "other/llm_usage/LLM_USAGE.txt".
+Some coding and editing writing in this project is done with the help of ChatGPT 4o and the entire chat history is available in usage.txt located in the "other/llm_usage/LLM_USAGE.txt".
 
