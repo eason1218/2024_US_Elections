@@ -242,7 +242,7 @@ kable(candidate_results %>% select(answer, probability),
       format = "markdown", 
       caption = "Top 4 Candidates Results Table")
 ```
-@tbl-table1 show trump is the most likely candidate to win with probability of 0.34.
+@tbl-table1 show Trump is the most likely candidate to win with probability of 0.34.
 Vote Percentage Distribution
 Finally, we visualize the vote percentage distribution of the top candidates.
 
