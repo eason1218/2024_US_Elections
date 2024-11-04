@@ -81,6 +81,7 @@ poll_counts <- poll_data %>%
   mutate(percentage = total_count / sum(total_count) * 100)
 ```
 ```{r, quiet=TRUE, r, fig.width=6, fig.height=3, fig.align='center'}
+#| label: fig-figure1
 #| warning: false
 #| message: false
 #| echo:    false
@@ -94,6 +95,8 @@ ggplot(poll_counts, aes(x = "", y = percentage, fill = pollster)) +
     plot.caption = element_text(size = 8, hjust = 0.6)
   )
 ```
+@fig-figure1 shows the distribution of pollsters, with Morning Consult having the largest share.
+
 To identify the specific effects of different survey agencies on support rates, we calculated the pollster effect to capture the systematic bias that different survey agencies may have in overestimating or underestimating candidate support rates. Through these variables, the model can more accurately estimate support rates and consider differences in survey institutions.
 
 # Model {#sec-Model}
@@ -179,7 +182,7 @@ pollster_results <- data.frame(
 
 # Results {#sec-Results}
 ```{r, fig.width=6, fig.height=3, fig.align='center'}
-#| label: fig-figure1
+#| label: fig-figure2
 #| warning: false
 #| message: false
 #| echo:    false
@@ -193,9 +196,9 @@ ggplot(data.frame(mu = mu_post), aes(x = mu)) +
   ) +
   theme_minimal()
 ```
-@fig-figure1 shows the posterior estimate for the parameter mu shows that the posterior mean is -0.5725. The 95% credible interval for μ ranges from -1.4148 to 0.5035, indicating the range within which the true value of μ is likely to fall with 95% probability.
+@fig-figure2 shows the posterior estimate for the parameter mu shows that the posterior mean is -0.5725. The 95% credible interval for μ ranges from -1.4148 to 0.5035, indicating the range within which the true value of μ is likely to fall with 95% probability.
 ```{r, fig.width=6, fig.height=3, fig.align='center'}
-#| label: fig-figure2
+#| label: fig-figure3
 #| warning: false
 #| message: false
 #| echo:    false
@@ -209,10 +212,10 @@ ggplot(data.frame(sigma = sigma_post), aes(x = sigma)) +
   theme_minimal()
 ```
 \newpage
-@fig-figure2 shows the parameter sigma, the posterior mean is estimated to be 3.5336. The 95% credible interval for σ extends from 0.8571 to 10.2785, reflecting the uncertainty around the estimate and providing a range of probable values for σ.
+@fig-figure3 shows the parameter sigma, the posterior mean is estimated to be 3.5336. The 95% credible interval for σ extends from 0.8571 to 10.2785, reflecting the uncertainty around the estimate and providing a range of probable values for σ.
 
 ```{r, fig.width=6, fig.height=3, fig.align='center'}
-#| label: fig-figure3
+#| label: fig-figure4
 #| warning: false
 #| message: false
 #| echo:    false
@@ -223,7 +226,7 @@ ggplot(pollster_results, aes(y = mean_effect)) +
   theme_minimal()
 ```
 \newpage
-@fig-figure3 results indicate that the overall mean support rate for candidates is approximately 14.35%, and at a 95% confidence level, the true mean falls between 13.54% and 15.14%, showing some volatility. Meanwhile, the standard deviation of the support rate is about 15.39%, indicating a significant degree of variability between different survey results. The confidence interval (14.79% to 16.00%) further confirms the range of changes in support rates, reflecting possible differences in characteristics and methods among different survey institutions. Overall, these results indicate that the candidate's support rate is around 14% and there is significant variation.
+@fig-figure4 results indicate that the overall mean support rate for candidates is approximately 14.35%, and at a 95% confidence level, the true mean falls between 13.54% and 15.14%, showing some volatility. Meanwhile, the standard deviation of the support rate is about 15.39%, indicating a significant degree of variability between different survey results. The confidence interval (14.79% to 16.00%) further confirms the range of changes in support rates, reflecting possible differences in characteristics and methods among different survey institutions. Overall, these results indicate that the candidate's support rate is around 14% and there is significant variation.
 \newpage
 ```{r}
 #| label: tbl-table1
@@ -253,7 +256,7 @@ kable(candidate_results %>% select(answer, probability),
 
 
 ```{r, fig.width=6, fig.height=3, fig.align='center'}
-#| label: fig-figure4
+#| label: fig-figure5
 #| warning: false
 #| message: false
 #| echo:    false
@@ -287,7 +290,7 @@ ggplot(top_candidates, aes(x = "", y = probability, fill = answer)) +
     check_overlap = TRUE
   )
 ```
-@fig-figure4 show in the popular vote of the 2024 US presidential election, the Republican Party has one representative, former President Donald Trump, who ranks first with 33.65% of the vote. The Democratic Party has two representatives, namely current Vice President Kamala Harris and President Joe Biden, with vote percentages of 20.02% and 27.38%, respectively. In addition, the Liberal Party has one representative, Charles Ballay, who received 18.95% of the vote, the lowest among all candidates.
+@fig-figure5 show in the popular vote of the 2024 US presidential election, the Republican Party has one representative, former President Donald Trump, who ranks first with 33.65% of the vote. The Democratic Party has two representatives, namely current Vice President Kamala Harris and President Joe Biden, with vote percentages of 20.02% and 27.38%, respectively. In addition, the Liberal Party has one representative, Charles Ballay, who received 18.95% of the vote, the lowest among all candidates.
 
 This distribution shows the diversity of the political landscape in the United States, where the Republican and Democratic parties remain the main political forces, while the Liberal Party, as a third-party force, still holds a place in elections despite its lower vote share. Trump's high vote share reflects his continued influence and support among Republican voters in the United States. The vote share of Harris and Biden shows the competitiveness within the Democratic Party and the different views of voters towards these two candidates. As a candidate for the Liberal Party, Charles Bale's participation represents the demand for third-party candidates and a challenge to the two party system in American politics, despite having the lowest vote share.
 
