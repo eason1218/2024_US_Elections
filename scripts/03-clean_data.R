@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Clean the raw data
 # Author: YiZhuo Li
-# Date: 2 November 2024
+# Date: 2 November, 2024
 # Contact: liyizhuo.li@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: The `tidyverse` and `readr` package must be installed
