@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project explores predicting US presidential election outcomes using Bayesian methods, improving accuracy by aggregating poll data and incorporating prior information. The model shows Trump leading with 33.65% support, followed by Biden at 27.38%, despite Biden's withdrawal. The study emphasizes the importance of using up-to-date data and acknowledges limitations, such as potential biases and outdated information in polling data.
+This project explores predicting US presidential election outcomes using Bayesian methods, improving accuracy by aggregating poll data and incorporating prior information. The model shows Trump leading with 33.65% support, followed by Biden at 27.38%, despite Biden's withdrawal. The project emphasizes the importance of using up-to-date data and acknowledges limitations, such as potential biases and outdated information in polling data.
 
 
 ## File Structure
