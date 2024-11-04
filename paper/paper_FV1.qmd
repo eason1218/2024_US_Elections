@@ -242,9 +242,8 @@ kable(candidate_results %>% select(answer, probability),
       format = "markdown", 
       caption = "Top 4 Candidates Results Table")
 ```
-@tbl-table1 show Trump is the most likely candidate to win with probability of 0.34.
-Vote Percentage Distribution
-Finally, we visualize the vote percentage distribution of the top candidates.
+@tbl-table1 show Trump is the most probable outcome (34%), followed by Biden (27%), Harris (20%), and Ballay (19%). 
+
 
 ```{r, fig.width=6, fig.height=3, fig.align='center'}
 #| label: fig-figure4
