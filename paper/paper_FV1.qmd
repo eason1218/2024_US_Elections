@@ -142,8 +142,8 @@ fit <- sampling(compiled_model, data = data_list, chains = 4, iter = 2000, refre
 ```
 ## Hypothesis
 
-In the model, the parameter mu represents the mean of the overall voting percentage, which is the average level of different pollster voting results. And the parameter sigma represents the standard deviation of the voting percentage, while pollster_fect represents the impact of each pollster on the voting percentage.
-The prior distribution of parameters defines the initial assumptions for these parameters. Specifically, the prior distribution of mu is a normal distribution with a mean of 0 and a standard deviation of 1 (mu~normal (0,1)), which means that in the absence of data, we consider the central value of the overall voting percentage to be approximately 0 and there is some fluctuation. The prior distribution of sigma is a Cauchy distribution with a mean of 0 and a scale parameter of 1 (sigma~Cauchy (0,1)), indicating that we hold a relatively loose view on the variability of voting percentages, allowing for greater uncertainty. Finally, the prior distribution of the pollster_ effect is a normal distribution based on sigma (pollster_ effect~normal (0, sigma)), implying that the influence of each pollster on the voting percentage is distributed around the overall effect mu and has a certain degree of variability.
+In the model, the parameter mu represents the mean of the overall voting percentage, which is the average of different pollster voting results. The parameter sigma represents the standard deviation of the voting percentage, while pollster_fect represents the impact of each pollster on the voting percentage.
+The prior distribution of parameters defines the initial assumptions for these parameters. Specifically, the prior distribution of mu is a normal distribution with a mean of 0 and a standard deviation of 1 (mu~normal (0,1)), which means that in the absence of data, we consider the central value of the overall voting percentage to be approximately 0 and there is some fluctuation. The prior sigma distribution is a Cauchy distribution with a mean of 0 and a scale parameter of 1 (sigma~Cauchy (0,1)), indicating that we hold a relatively loose view of the variability of voting percentages, allowing for greater uncertainty. Finally, the prior distribution of the pollster_ effect is a normal distribution based on sigma (pollster_ effect~normal (0, sigma)), implying that the influence of each pollster on the voting percentage is distributed around the overall effect mu and has a certain degree of variability. Due to the Electoral College, we assume that only the four candidates with the highest predicted probabilities have a realistic chance of winning the presidency.
 
 ```{r, quiet=TRUE}
 #| warning: false
@@ -233,7 +233,14 @@ candidate_results <- poll_of_polls %>%
   head(4) %>%
   mutate(mean_percentage = round(mean_percentage, 2))
 
-kable(candidate_results, format = "markdown", caption = "Top 4 Candidates Results Table")
+total_mean_percentage <- sum(candidate_results$mean_percentage)
+
+candidate_results <- candidate_results %>%
+  mutate(probability = round(mean_percentage / total_mean_percentage, 2))
+
+kable(candidate_results %>% select(answer, probability), 
+      format = "markdown", 
+      caption = "Top 4 Candidates Results Table")
 ```
 @tbl-table1 show trump is the most likely candidate to win with an average percentage of 35.52.
 Vote Percentage Distribution
@@ -249,26 +256,32 @@ top_candidates <- poll_of_polls %>%
   summarise(mean_percentage = mean(percentage)) %>%
   arrange(desc(mean_percentage)) %>%
   top_n(4, mean_percentage) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(mean_percentage = round(mean_percentage, 2))
 
-ggplot(top_candidates, aes(x = "", y = mean_percentage, fill = answer)) +
+total_mean_percentage <- sum(top_candidates$mean_percentage)
+
+top_candidates <- top_candidates %>%
+  mutate(probability = round(mean_percentage / total_mean_percentage, 4))
+
+ggplot(top_candidates, aes(x = "", y = probability, fill = answer)) +
   geom_bar(stat = "identity", width = 1, color = "white") +
   coord_polar(theta = "y") +
-  labs(caption = "Vote Percentage Distribution of Top Candidates") +
+  labs(caption = "Probability Distribution of Top Candidates") +
   theme_void() +
   theme(
     legend.title = element_blank(),
     plot.caption = element_text(hjust = 0.6, size = 8, face = "bold")
   ) +
   scale_fill_brewer(palette = "Set3") +
-  geom_text(aes(label = sprintf("%.2f%%", mean_percentage)),
+  geom_text(aes(label = sprintf("%.2f%%", probability * 100)),
     position = position_stack(vjust = 0.5),
     color = "black",
     size = 5,
     check_overlap = TRUE
   )
 ```
-@fig-figure4 show in the popular vote of the 2024 US presidential election, the Republican Party has one representative, former President Donald Trump, who ranks first with 35.52% of the vote. The Democratic Party has two representatives, namely current Vice President Kamala Harris and President Joe Biden, with vote percentages of 21.13% and 28.9%, respectively. In addition, the Liberal Party has one representative, Charles Ballay, who received 20% of the vote, the lowest among all candidates.
+@fig-figure4 show in the popular vote of the 2024 US presidential election, the Republican Party has one representative, former President Donald Trump, who ranks first with 33.65% of the vote. The Democratic Party has two representatives, namely current Vice President Kamala Harris and President Joe Biden, with vote percentages of 20.02% and 27.38%, respectively. In addition, the Liberal Party has one representative, Charles Ballay, who received 18.95% of the vote, the lowest among all candidates.
 
 This distribution shows the diversity of the political landscape in the United States, where the Republican and Democratic parties remain the main political forces, while the Liberal Party, as a third-party force, still holds a place in elections despite its lower vote share. Trump's high vote share reflects his continued influence and support among Republican voters in the United States. The vote share of Harris and Biden shows the competitiveness within the Democratic Party and the different views of voters towards these two candidates. As a candidate for the Liberal Party, Charles Bale's participation represents the demand for third-party candidates and a challenge to the two party system in American politics, despite having the lowest vote share.
 
@@ -276,15 +289,15 @@ This distribution shows the diversity of the political landscape in the United S
 
 This study highlights the efficacy of Bayesian prediction methods in analyzing the 2024 U.S. presidential election, which offer a distinct advantage in handling uncertainty and refining prediction accuracy. Traditional polling methods often treat each poll as an isolated data point, but Bayesian models aggregate information in a way that continuously updates predictions as new data arrives. This cumulative approach, which uses posterior distributions, reflects not only current estimates but also the uncertainty around these estimates, making the results more robust than single-point or static predictions. Additionally, Bayesian models allow for the inclusion of prior information—either in the form of historical data, expert knowledge, or insights from previous elections—enabling the model to adjust and refine itself based on well-established patterns in voter behavior. For example, historical support trends and demographic voting patterns can be woven into the model to create a more sophisticated and contextually relevant prediction. Moreover, the flexibility of Bayesian models makes them particularly suited for political forecasting, where complex variables—like polling biases, shifting voter sentiments, and varying sample sizes—can differ significantly across agencies and regions. By integrating data from multiple polling institutions, the Bayesian model smooths out these variations, effectively reducing noise and delivering a more stable and comprehensive view of likely election outcomes.
 
-## Distribution and Interpretation of Candidate Support Rates
+## Distribution of Candidate Support Rates
 
-The model’s findings reveal Trump as the leading candidate, with a predicted support rate of 35.52%, followed by Biden at 28.90%, despite Biden’s withdrawal from the race. This notable support for Biden, even in his absence, suggests a strong residual loyalty among his voter base, indicating that some voters’ preferences may not immediately adjust following a candidate’s withdrawal. This phenomenon may point to the enduring appeal of a candidate’s previous policies, public image, or long-standing influence, even if they are no longer actively campaigning. Additionally, the model identifies significant support for Harris and Ballay, with Harris, the Democratic vice-presidential candidate, holding 21.13% support, and Ballay, a third-party candidate, receiving 20%. These results illustrate the ideological landscape of American politics, where Republican and Democratic candidates remain dominant, yet there is also a noticeable demand for third-party options. The diverse distribution of support rates reflects a multifaceted electorate that resonates with different political messages and ideologies, suggesting that voters are open to considering alternatives beyond the traditional two-party candidates. This variation in candidate support underlines the importance of accounting for political diversity in predictive models, as voter support can be distributed widely across multiple figures, each appealing to different sectors of the population.
+The model’s findings reveal Trump as the leading candidate, with a predicted support rate of 33.65%, followed by Biden at 27.38%, despite Biden’s withdrawal from the race. This notable support for Biden, even in his absence, suggests a strong residual loyalty among his voter base, indicating that some voters’ preferences may not immediately adjust following a candidate’s withdrawal. This phenomenon may point to the enduring appeal of a candidate’s previous policies, public image, or long-standing influence, even if they are no longer actively campaigning. Additionally, the model identifies significant support for Harris and Ballay, with Harris, the Democratic vice-presidential candidate, holding 20.02% support, and Ballay, a third-party candidate, receiving 18.95%. These results illustrate the ideological landscape of American politics, where Republican and Democratic candidates remain dominant, yet there is also a noticeable demand for third-party options. The diverse distribution of support rates reflects a multifaceted electorate that resonates with different political messages and ideologies, suggesting that voters are open to considering alternatives beyond the traditional two-party candidates. This variation in candidate support underlines the importance of accounting for political diversity in predictive models, as voter support can be distributed widely across multiple figures, each appealing to different sectors of the population.
 
-## Stability and Integration of Polling Data
+## Stability of Polling Data
 
 A critical component of this study’s approach is its integration of polling data from numerous institutions, a method that enhances the stability and reliability of its predictions. By leveraging data from a wide range of pollsters, the Bayesian model mitigates the impact of any individual pollster’s bias. This approach is particularly valuable in the context of U.S. elections, where different polling agencies often yield varying results due to methodological differences, sampling biases, and timing. By aggregating these diverse data points, the Bayesian framework provides a holistic picture that balances individual variances, making it less susceptible to outlier polls. The analysis of the aggregated data reveals an average support rate of approximately 14.35% across candidates, with a standard deviation of 15.39%, underscoring the variability across polls and reflecting the complexity of the electoral landscape. This variability points to the multifaceted nature of public opinion, where voter preferences are influenced by numerous factors, including geographic region, demographics, and specific polling methodologies. By encompassing these diverse inputs, the model not only stabilizes its predictions but also captures the full spectrum of voter sentiment. This multi-source data approach is crucial for election forecasting, as it ensures that predictions are not unduly swayed by the nuances or biases of any single poll and instead reflect a balanced view of the electorate.
 
-## Diversity and Dynamic Nature of the Political Landscape
+## Dynamic Nature of the Political Landscape
 
 The U.S. election cycle is inherently dynamic, with voter preferences shifting in response to ongoing social, economic, and political developments. This study’s Bayesian framework effectively captures this evolving nature of political sentiment, making it especially relevant for election forecasting. The support rates generated by the model do more than provide a snapshot of current preferences; they also reflect broader trends and voter expectations regarding future policy directions. For instance, shifts in a candidate’s support level might correlate with recent policy announcements, campaign strategies, or emerging issues that resonate with the public. By enabling real-time updates as new polling data becomes available, Bayesian methods ensure that the model remains responsive and accurately aligned with the latest shifts in public sentiment. This adaptability is particularly valuable in volatile electoral environments, where even minor changes in public opinion can significantly impact campaign strategies and political outcomes. For political analysts and campaign teams, these insights allow for more informed strategic planning, guiding resource allocation and messaging tactics based on the latest voter trends.
 
@@ -292,7 +305,7 @@ Beyond election forecasting, the Bayesian approach has broader applicability acr
 
 ## Weakness and Next Step
 
-According to the prediction results of your model, Trump's win rate is 35.52%, while Biden's win rate is 28.90%, despite Biden's withdrawal from the election, which has raised concerns about the effectiveness of the model and data processing. Firstly, Bayesian models rely on the quality of input data. If the data contains outdated or incorrect polling information, the model may produce inaccurate results. In this situation, Biden's approval rating may stem from early polls not reflecting his withdrawal promptly. Secondly, the prior assumptions of the model may also affect the results. If the prior information is not appropriately adjusted to reflect candidate withdrawal during model construction, it may lead to an inaccurate estimation of Biden's support rate. In addition, the polling data itself may have biases, especially after candidates withdraw, and many voters' opinions may not have been updated yet. Therefore, when integrating polling data from multiple sources, special attention needs to be paid to updating and reflecting the latest election situation. Finally, the design and parameter settings of the model may not be sufficient to handle dynamically changing election environments. Although Bayesian models are flexible, they also require a reasonable modeling strategy to capture changes in candidate support rates. Therefore, when analyzing the 'poll of polls', it is crucial to ensure the use of the latest and accurate data, as well as a reasonable model structure.
+According to the prediction results of your model, Trump's win rate is 33.65%, while Biden's win rate is 27.38%, despite Biden's withdrawal from the election, which has raised concerns about the effectiveness of the model and data processing. Firstly, Bayesian models rely on the quality of input data. If the data contains outdated or incorrect polling information, the model may produce inaccurate results. In this situation, Biden's approval rating may stem from early polls not reflecting his withdrawal promptly. Secondly, the prior assumptions of the model may also affect the results. If the prior information is not appropriately adjusted to reflect candidate withdrawal during model construction, it may lead to an inaccurate estimation of Biden's support rate. In addition, the polling data itself may have biases, especially after candidates withdraw, and many voters' opinions may not have been updated yet. Therefore, when integrating polling data from multiple sources, special attention needs to be paid to updating and reflecting the latest election situation. Finally, the design and parameter settings of the model may not be sufficient to handle dynamically changing election environments. Although Bayesian models are flexible, they also require a reasonable modeling strategy to capture changes in candidate support rates. Therefore, when analyzing the 'poll of polls', it is crucial to ensure the use of the latest and accurate data, as well as a reasonable model structure.
 
 The second issue with this paper is that we assume that bias in presidential vote data by different institutions follows a normal distribution. However, the veracity of this idea has not been established. If there is a bias or kurtosis in the deviation, it may have an impact on our overall comprehension of the vote data findings, impacting election forecast accuracy. Furthermore, our model does not assign different weights to different institutions, therefore we believe that the findings achieved by diverse institutions are equally important. However, we know from earlier studies that the top ten pollsters account for about half of the 222 pollsters, therefore the confidence in their results is higher, and we should change the weights appropriately.
 
