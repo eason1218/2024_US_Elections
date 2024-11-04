@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Tests the structure and validity of the analysis data
 # Author: YiZhuo Li
-# Date: 2 November 2024
+# Date: 2 November, 2024
 # Contact: liyizhuo.li@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: The `tidyverse` package must be installed
